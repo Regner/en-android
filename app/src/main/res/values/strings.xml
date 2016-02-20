@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Eve Notifications</string>
+    <string name="navigation">Menu</string>
+
+    <string name="menuSSO">Eve SSO</string>
+    <string name="menuSSOLogin">Login</string>
+    <string name="menuSSOLogout">Logout</string>
+
+
+</resources>

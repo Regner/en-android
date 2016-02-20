@@ -1,0 +1,3 @@
+[submodule "crest"]
+	path = crest
+	url = https://evanova@bitbucket.org/evanova/eve-crest.git
