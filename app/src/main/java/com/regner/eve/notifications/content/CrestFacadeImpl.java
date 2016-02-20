@@ -20,19 +20,17 @@ final class CrestFacadeImpl implements CrestFacade {
         final String uri = auth.start();
 
         if (StringUtils.isBlank(uri)) {
-            return;
+            callback.set(null);
         }
+
         this.status = null;
-        callback.show(uri, new Authenticator() {
-            @Override
-            public void setAuthenticated(String authCode) {
-                if (StringUtils.isBlank(authCode)) {
-                    auth.clear();
-                } else {
-                    status = auth.authenticate(authCode);
-                    callback.show(status);
-                }
+        callback.show(uri, authCode -> {
+            if (StringUtils.isBlank(authCode)) {
+                auth.clear();
+            } else {
+                status = auth.authenticate(authCode);
             }
+            callback.set(status);
         });
     }
 }

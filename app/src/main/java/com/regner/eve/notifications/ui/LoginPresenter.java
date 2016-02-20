@@ -29,7 +29,7 @@ public class LoginPresenter extends ViewPresenter<LoginView> {
             }
 
             @Override
-            public void show(CrestCharacterStatus status) {
+            public void set(CrestCharacterStatus status) {
                 getView().showStatus(status);
             }
         });

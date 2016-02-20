@@ -1,5 +1,6 @@
 package com.regner.eve.notifications.content;
 
+
 import com.tlabs.eve.crest.model.CrestCharacterStatus;
 
 public interface CrestFacade {
@@ -13,7 +14,7 @@ public interface CrestFacade {
 
         void show(final String uri, final Authenticator authenticator);
 
-        void show(final CrestCharacterStatus status);
+        void set(final CrestCharacterStatus status);
 
     }
 

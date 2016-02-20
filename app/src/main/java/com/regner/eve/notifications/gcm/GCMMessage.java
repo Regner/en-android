@@ -1,7 +1,5 @@
 package com.regner.eve.notifications.gcm;
 
-import android.content.Intent;
-
 public class GCMMessage {
 
     private String from;
