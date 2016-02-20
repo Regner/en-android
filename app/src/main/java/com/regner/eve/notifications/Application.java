@@ -1,6 +1,7 @@
 package com.regner.eve.notifications;
 
 import com.regner.eve.notifications.content.CrestModule;
+import com.regner.eve.notifications.gcm.GCMModule;
 
 public class Application extends android.app.Application {
 
@@ -14,6 +15,7 @@ public class Application extends android.app.Application {
             appComponent =
                     DaggerApplicationComponent.builder()
                             .crestModule(new CrestModule(this))
+                            .gCMModule(new GCMModule(this))
                             .build();
         }
     }

@@ -4,7 +4,6 @@ import com.regner.eve.notifications.PerActivity;
 
 import javax.inject.Singleton;
 
-
 @PerActivity
 @Singleton
 public abstract class ViewPresenter<V> {

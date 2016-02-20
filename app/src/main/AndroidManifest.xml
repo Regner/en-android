@@ -13,6 +13,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission android:name="com.regner.eve.notifications.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.regner.eve.notifications.permission.C2D_MESSAGE" />
+
     <application
         android:name=".Application"
         android:allowBackup="true"
@@ -21,6 +25,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="com.regner.eve.notifications.rss" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".gcm.GCMListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".gcm.GCMInstanceService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".ui.MainActivity">
             <intent-filter>

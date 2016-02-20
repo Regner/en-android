@@ -1,6 +1,11 @@
 package com.regner.eve.notifications.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import com.regner.eve.notifications.ApplicationComponent;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AbstractActivity {
+
+    @Override
+    protected void inject(ApplicationComponent component) {
+
+    }
 }

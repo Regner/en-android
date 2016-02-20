@@ -5,7 +5,7 @@ import com.tlabs.eve.crest.model.CrestCharacterStatus;
 
 import org.apache.commons.lang.StringUtils;
 
-public class CrestFacadeImpl implements CrestFacade {
+final class CrestFacadeImpl implements CrestFacade {
 
     private CrestNetwork crest;
     private CrestCharacterStatus status;
