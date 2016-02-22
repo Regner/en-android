@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 
 interface FeedService {
 
-    @GET("/en-rss/")
+    @GET("/en-rss/external/")
     Call<Map<String, Feed>> getFeeds();
 
     @GET("/en-rss/external/characters/{charID}/")
