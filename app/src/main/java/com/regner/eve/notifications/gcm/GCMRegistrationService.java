@@ -109,7 +109,7 @@ public class GCMRegistrationService extends IntentService {
         Log.i("GCM Token: " + gcmToken);
         try {
             final Response<String> registered = this.feeds
-                    .saveFeedToken(authToken, charID, new FeedToken(gcmToken))
+                    .saveFeedToken("Bearer " + authToken, charID, new FeedToken(gcmToken))
                     .execute();
             Log.i(ToStringBuilder.reflectionToString(registered));
         }
