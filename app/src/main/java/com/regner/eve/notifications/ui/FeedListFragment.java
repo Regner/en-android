@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.regner.eve.notifications.ApplicationComponent;
 import com.regner.eve.notifications.R;
+import com.regner.eve.notifications.crest.CrestStatus;
 import com.regner.eve.notifications.feeds.FeedList;
 import com.regner.eve.notifications.feeds.FeedSettings;
 import com.regner.eve.notifications.util.Log;
@@ -18,7 +19,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.inject.Inject;
 
-public class MainFragment extends AbstractFragment implements FeedView {
+public class FeedListFragment extends AbstractFragment implements FeedListView {
 
     @Inject
     FeedListPresenter presenter;
@@ -57,14 +58,21 @@ public class MainFragment extends AbstractFragment implements FeedView {
     }
 
     @Override
-    public void show(FeedList feeds) {
-
+    public void showList(FeedList feeds) {
         Log.e("SHOW FEEDS " + ToStringBuilder.reflectionToString(feeds));
         this.adapter.setFeeds(feeds);
     }
 
     @Override
-    public void show(FeedSettings settings) {
-        Log.e("SHOW FEEDS SEETINGS " + ToStringBuilder.reflectionToString(settings));
+    public void showSettings(FeedSettings settings) {
+        Log.e("SHOW SETTINGS " + ToStringBuilder.reflectionToString(settings));
+        this.adapter.setSettings(settings);
+    }
+
+    protected void setCrestStatus(final CrestStatus status) {
+        this.presenter.loadFeeds();
+        if (null != status) {
+            this.presenter.loadSettings();
+        }
     }
 }

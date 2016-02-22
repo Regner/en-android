@@ -14,8 +14,9 @@ final class FeedToken {
     @JsonIgnore
     private String characterID;
 
-    public void setToken(String token) {
+    public FeedToken setToken(String token) {
         this.token = token;
+        return this;
     }
 
     public String getToken() {
@@ -26,15 +27,17 @@ final class FeedToken {
         return authorization;
     }
 
-    public void setAuthorization(String authorization) {
+    public FeedToken setAuthorization(String authorization) {
         this.authorization = authorization;
+        return this;
     }
 
     public String getCharacterID() {
         return characterID;
     }
 
-    public void setCharacterID(String characterID) {
+    public FeedToken setCharacterID(String characterID) {
         this.characterID = characterID;
+        return this;
     }
 }

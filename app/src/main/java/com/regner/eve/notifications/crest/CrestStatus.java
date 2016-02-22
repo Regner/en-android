@@ -5,9 +5,6 @@ public class CrestStatus {
     private String characterName;
     private long characterID;
 
-    private String tokenType;
-    private String hash;
-
     void setCharacterName(String characterName) {
         this.characterName = characterName;
     }
@@ -16,13 +13,6 @@ public class CrestStatus {
         this.characterID = characterID;
     }
 
-    void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
-    }
-
-    void setHash(String hash) {
-        this.hash = hash;
-    }
 
     public String getCharacterName() {
         return characterName;
@@ -30,13 +20,5 @@ public class CrestStatus {
 
     public long getCharacterID() {
         return characterID;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public String getHash() {
-        return hash;
     }
 }

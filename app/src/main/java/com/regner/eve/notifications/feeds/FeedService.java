@@ -25,4 +25,10 @@ interface FeedService {
             @Header("Authorization") String authorization,
             @Path("charID") final String charID,
             @Body final FeedSettings settings);
+
+    @PUT("/en-gcm/external/characters/{charID}/")
+    Call<String> saveFeedToken(
+            @Header("Authorization") String authorization,
+            @Path("charID") final String charID,
+            @Body final FeedToken feedToken);
 }

@@ -8,17 +8,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class GCMModule {
+public class MessageModule {
 
     private final Context context;
 
-    public GCMModule(Context context) {
+    public MessageModule(Context context) {
         this.context = context.getApplicationContext();
     }
 
     @Provides
     @Singleton
-    public GCMFacade provideGCMFacade() {
-        return new GCMFacadeImpl(context);
+    public MessageFacade provideGCMFacade() {
+        return new MessageFacadeImpl(context);
     }
 }

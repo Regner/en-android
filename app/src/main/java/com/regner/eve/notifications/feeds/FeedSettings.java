@@ -13,16 +13,18 @@ public class FeedSettings {
         return characterID;
     }
 
-    public void setCharacterID(String characterID) {
+    public FeedSettings setCharacterID(String characterID) {
         this.characterID = characterID;
+        return this;
     }
 
     public Map<String, Boolean> getSettings() {
         return Collections.unmodifiableMap(settings);
     }
 
-    public void setSettings(final String feed, final boolean enabled) {
+    public FeedSettings setSettings(final String feed, final boolean enabled) {
         this.settings.put(feed, enabled);
+        return this;
     }
 
     public boolean getSettings(final String feed) {
@@ -30,10 +32,11 @@ public class FeedSettings {
         return (null == b) ? false : b;
     }
 
-    public void setSettings(Map<String, Boolean> settings) {
+    public FeedSettings setSettings(Map<String, Boolean> settings) {
         this.settings.clear();
         if (null != settings) {
             this.settings.putAll(settings);
         }
+        return this;
     }
 }

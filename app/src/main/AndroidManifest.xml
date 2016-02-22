@@ -57,10 +57,6 @@
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-        <service
-            android:name=".gcm.GCMRegistrationService"
-            android:exported="false">
-        </service>
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTop">

@@ -12,10 +12,11 @@ public class FeedList {
         return Collections.unmodifiableMap(this.feeds);
     }
 
-    public void setFeeds(Map<String, Feed> feeds) {
+    public FeedList setFeeds(Map<String, Feed> feeds) {
         this.feeds.clear();
         if (null != feeds) {
             this.feeds.putAll(feeds);
         }
+        return this;
     }
 }

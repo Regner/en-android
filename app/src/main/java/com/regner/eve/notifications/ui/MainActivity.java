@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends AbstractActivity<MainFragment> implements StatusView, LoginView {
+public class MainActivity extends AbstractActivity<FeedListFragment> implements StatusView, LoginView {
 
     @Inject
     LoginPresenter login;
@@ -23,8 +23,8 @@ public class MainActivity extends AbstractActivity<MainFragment> implements Stat
     private CrestStatus status;
 
     @Override
-    protected MainFragment createFragment() {
-        return new MainFragment();
+    protected FeedListFragment createFragment() {
+        return new FeedListFragment();
     }
 
     @Override
@@ -52,6 +52,7 @@ public class MainActivity extends AbstractActivity<MainFragment> implements Stat
     @Override
     public void showLogin(String uri) {
         final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
@@ -96,6 +97,7 @@ public class MainActivity extends AbstractActivity<MainFragment> implements Stat
             setTitle(r(R.string.title_logged_in, status.getCharacterName()));
             setDescription(R.string.title_logged_in_description);
         }
+        getFragment().setCrestStatus(status);
         supportInvalidateOptionsMenu();
     }
 
@@ -103,7 +105,7 @@ public class MainActivity extends AbstractActivity<MainFragment> implements Stat
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            login.completeLogin(intent.getData());
+            login.register(intent.getData());
         }
     }
 }

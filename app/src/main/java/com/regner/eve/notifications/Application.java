@@ -2,7 +2,7 @@ package com.regner.eve.notifications;
 
 import com.regner.eve.notifications.crest.CrestModule;
 import com.regner.eve.notifications.feeds.FeedModule;
-import com.regner.eve.notifications.gcm.GCMModule;
+import com.regner.eve.notifications.gcm.MessageModule;
 
 public class Application extends android.app.Application {
 
@@ -18,7 +18,7 @@ public class Application extends android.app.Application {
                     .builder()
                     .crestModule(new CrestModule(this))
                     .feedModule(new FeedModule(this))
-                    .gCMModule(new GCMModule(this))
+                    .messageModule(new MessageModule(this))
                     .applicationModule(new ApplicationModule(this))
                     .build();
         }

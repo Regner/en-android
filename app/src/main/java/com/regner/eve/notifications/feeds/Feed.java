@@ -11,23 +11,26 @@ public class Feed {
         return url;
     }
 
-    public void setUrl(String url) {
+    public Feed setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Feed setName(String name) {
         this.name = name;
+        return this;
     }
 
     public boolean getOfficial() {
         return official;
     }
 
-    public void setOfficial(boolean official) {
+    public Feed setOfficial(boolean official) {
         this.official = official;
+        return this;
     }
 }

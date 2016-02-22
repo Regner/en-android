@@ -1,24 +1,13 @@
 package com.regner.eve.notifications.crest;
 
 
+import android.net.Uri;
+
 public interface CrestFacade {
 
-    interface Authenticator {
+    String start();
 
-        void setAuthenticated(final String authCode);
-
-        String getAuthenticated();
-    }
-
-    interface AuthenticatorView {
-
-        void start(final String uri, final Authenticator authenticator);
-
-        void show(final CrestStatus status);
-
-    }
-
-    void login(final AuthenticatorView view);
+    CrestStatus login(final Uri authData);
 
     void logout();
 

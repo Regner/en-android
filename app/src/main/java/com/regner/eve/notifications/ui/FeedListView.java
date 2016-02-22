@@ -3,9 +3,9 @@ package com.regner.eve.notifications.ui;
 import com.regner.eve.notifications.feeds.FeedList;
 import com.regner.eve.notifications.feeds.FeedSettings;
 
-public interface FeedView {
+public interface FeedListView {
 
-    void show(final FeedList feeds);
+    void showList(final FeedList feeds);
 
-    void show(final FeedSettings feeds);
+    void showSettings(final FeedSettings feeds);
 }

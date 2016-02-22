@@ -1,12 +1,9 @@
 package com.regner.eve.notifications.crest;
 
-import com.regner.eve.notifications.util.Log;
-import com.regner.eve.notifications.util.RX;
+import android.net.Uri;
+
 import com.tlabs.eve.crest.CrestNetwork;
 import com.tlabs.eve.crest.model.CrestCharacterStatus;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 final class CrestFacadeImpl implements CrestFacade {
 
@@ -17,33 +14,25 @@ final class CrestFacadeImpl implements CrestFacade {
     }
 
     @Override
-    public void login(final AuthenticatorView callback) {
-        final CrestNetwork.CrestAuthenticator auth = this.crest.getAuthenticator();
+    public String start() {
+        return crest.getAuthenticator().start();
+    }
 
-        final String uri = auth.start();
-        if (StringUtils.isBlank(uri)) {
-            return;
+    @Override
+    public CrestStatus login(final Uri authData) {
+        if (null == authData) {
+            return null;
         }
-        callback.start(uri, new Authenticator() {
-            private String authCode;
+        if (!"eve".equals(authData.getScheme())) {
+            return null;
+        }
+        if (!"com.regner.eve.notifications".equals(authData.getHost())) {
+            return null;
+        }
 
-            @Override
-            public void setAuthenticated(String authCode) {
-                this.authCode = authCode;
-
-                RX.subscribe(
-                () -> transform(auth.authenticate(authCode)),
-                status -> {
-                    Log.d(ToStringBuilder.reflectionToString(status));
-                    callback.show(status);
-                });
-            }
-
-            @Override
-            public String getAuthenticated() {
-                return authCode;
-            }
-        });
+        final String authCode = authData.getQueryParameter("code");
+        final CrestNetwork.CrestAuthenticator auth = this.crest.getAuthenticator();
+        return transform(auth.authenticate(authCode));
     }
 
     @Override
@@ -60,8 +49,6 @@ final class CrestFacadeImpl implements CrestFacade {
         final CrestStatus returned = new CrestStatus();
         returned.setCharacterID(status.getCharacterID());
         returned.setCharacterName(status.getCharacterName());
-        returned.setTokenType(status.getTokenType());
-        returned.setHash(status.getHash());
         return returned;
     }
 }

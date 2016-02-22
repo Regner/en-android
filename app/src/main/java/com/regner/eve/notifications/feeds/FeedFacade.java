@@ -1,12 +1,12 @@
 package com.regner.eve.notifications.feeds;
 
-import retrofit2.Response;
-
 public interface FeedFacade {
 
     FeedList getFeeds();
 
-    FeedSettings getFeedSettings();
+    FeedSettings getSettings();
 
-    Response<?> saveFeedSettings(final FeedSettings settings);
+    void saveSettings(final FeedSettings settings);
+
+    boolean register(final String charID, final String authToken);
 }

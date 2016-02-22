@@ -5,7 +5,7 @@ import com.regner.eve.notifications.util.RX;
 
 import javax.inject.Inject;
 
-public class FeedListPresenter extends ViewPresenter<FeedView> {
+public class FeedListPresenter extends ViewPresenter<FeedListView> {
 
     private final FeedFacade feeds;
 
@@ -15,7 +15,10 @@ public class FeedListPresenter extends ViewPresenter<FeedView> {
     }
 
     public void loadFeeds() {
-        RX.subscribe(feeds::getFeeds, feeds -> getView().show(feeds));
-        RX.subscribe(feeds::getFeedSettings, settings -> getView().show(settings));
+        RX.subscribe(feeds::getFeeds, feeds -> getView().showList(feeds));
+    }
+
+    public void loadSettings() {
+        RX.subscribe(feeds::getSettings, settings -> getView().showSettings(settings));
     }
 }
