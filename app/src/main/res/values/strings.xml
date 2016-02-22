@@ -6,5 +6,12 @@
     <string name="menuSSOLogin">Login</string>
     <string name="menuSSOLogout">Logout</string>
 
+    <string name="title_logged_in">%1$s</string>
+    <string name="title_logged_in_description"></string>
 
+    <string name="title_logged_out">Eve Notifications</string>
+    <string name="title_logged_out_description">Log in to Eve SSO for profit</string>
+
+    <string name="snack_logged_in">Logged in as %1$s</string>
+    <string name="snack_logged_out">Logged Out</string>
 </resources>

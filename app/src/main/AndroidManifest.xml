@@ -11,11 +11,15 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.INTERNET" />
 
-    <permission android:name="com.regner.eve.notifications.permission.C2D_MESSAGE"
+    <permission
+        android:name="com.regner.eve.notifications.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.regner.eve.notifications.permission.C2D_MESSAGE" />
+
+    <uses-permission
+        android:name="com.regner.eve.notifications.permission.C2D_MESSAGE" />
 
     <application
         android:name=".Application"
@@ -24,6 +28,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.regner.eve.notifications.util.GlideConfiguration"
+            android:value="GlideModule" />
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -49,6 +57,10 @@
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
+        <service
+            android:name=".gcm.GCMRegistrationService"
+            android:exported="false">
+        </service>
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTop">
@@ -64,8 +76,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="eveisreal"
-                    android:scheme="myapp" />
+                    android:host="com.regner.eve.notifications"
+                    android:scheme="eve"/>
             </intent-filter>
         </activity>
 

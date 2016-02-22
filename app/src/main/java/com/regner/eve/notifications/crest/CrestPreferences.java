@@ -1,24 +1,20 @@
-package com.regner.eve.notifications.content;
+package com.regner.eve.notifications.crest;
 
 import android.content.Context;
 
 import com.regner.eve.notifications.util.PreferenceSupport;
 import com.tlabs.eve.crest.CrestNetwork;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-@Singleton
 final class CrestPreferences {
 
     private static final String CLIENT_ID_KEY = CrestPreferences.class.getName() + ".clientID";
-    private static final String CLIENT_ID_DEFAULT = "FILLME";
+    private static final String CLIENT_ID_DEFAULT = "1bd5a6f981454e1a9ede05ac921f1d55";
 
     private static final String CLIENT_CODE_KEY = CrestPreferences.class.getName() + ".clientCode";
-    private static final String CLIENT_CODE_DEFAULT = "FILLME";
+    private static final String CLIENT_CODE_DEFAULT = "SuXBEKO0m8RmTiwkQVdmk3Jq8Se7Rfne4C75NOjo";
 
     private static final String CLIENT_URI_KEY = CrestPreferences.class.getName() + ".clientURI";
-    private static final String CLIENT_URI_DEFAULT = "FILLME";
+    private static final String CLIENT_URI_DEFAULT = "eve://com.regner.eve.notifications/redirect";
 
     private static final String CLIENT_NAME_KEY = CrestPreferences.class.getName() + ".clientName";
     private static final String CLIENT_NAME_DEFAULT = "EveNotifications";
@@ -32,7 +28,6 @@ final class CrestPreferences {
     private final Context context;
     private final CrestNetwork.CrestInfo networkInfo;
 
-    @Inject
     public CrestPreferences(Context context) {
         this.context = context.getApplicationContext();
         this.networkInfo = new CrestNetwork.CrestInfo() {
@@ -59,6 +54,11 @@ final class CrestPreferences {
             @Override
             public String getCrestURL() {
                 return PreferenceSupport.getString(context, CREST_URL_KEY, CREST_URL_DEFAULT);
+            }
+
+            @Override
+            public String[] getClientScopes() {
+                return new String[0];
             }
         };
     }

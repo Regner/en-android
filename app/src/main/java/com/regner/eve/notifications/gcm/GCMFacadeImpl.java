@@ -37,7 +37,7 @@ final class GCMFacadeImpl implements GCMFacade {
         return subject
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(m -> onNext.onMessage(m));
+                .subscribe(onNext::onMessage);
     }
 
     private static GCMMessage from(final Intent intent) {

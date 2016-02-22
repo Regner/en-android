@@ -46,13 +46,6 @@ public abstract class AbstractFragment extends Fragment implements TitleView {
     }
 
     @Override
-    public void setLoading(boolean show) {
-        if (getActivity() instanceof TitleView) {
-            ((TitleView)getActivity()).setLoading(show);
-        }
-    }
-
-    @Override
     public void setTitle(String title) {
         if (getActivity() instanceof TitleView) {
             ((TitleView)getActivity()).setTitle(title);
@@ -61,6 +54,18 @@ public abstract class AbstractFragment extends Fragment implements TitleView {
 
     @Override
     public void setDescription(String title) {
+        if (getActivity() instanceof TitleView) {
+            ((TitleView)getActivity()).setDescription(title);
+        }
+    }
+
+    @Override
+    public void setTitle(int title) {
+        getActivity().setTitle(title);
+    }
+
+    @Override
+    public void setDescription(int title) {
         if (getActivity() instanceof TitleView) {
             ((TitleView)getActivity()).setDescription(title);
         }

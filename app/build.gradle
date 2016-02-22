@@ -66,6 +66,7 @@ android {
 dependencies {
     //https://bitbucket.org/evanova/eve-crest
     compile project(':crest')
+    compile 'org.slf4j:slf4j-android:1.7.12'
 
     compile 'io.reactivex:rxandroid:1.0.1'
 
@@ -81,6 +82,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.jakewharton:butterknife:7.0.1'
 
+    compile 'com.squareup.retrofit2:retrofit:2.0.+'
+    compile 'com.squareup.retrofit2:converter-jackson:2.0.+'
     testCompile 'junit:junit:4.12'
 
 }

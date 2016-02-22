@@ -1,10 +1,7 @@
 package com.regner.eve.notifications.ui;
 
-import com.tlabs.eve.crest.model.CrestCharacterStatus;
-
-public interface LoginView {
+public interface LoginView extends StatusView {
 
     void showLogin(final String uri);
 
-    void showStatus(final CrestCharacterStatus status);
 }

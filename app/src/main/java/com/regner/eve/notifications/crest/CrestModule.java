@@ -1,4 +1,4 @@
-package com.regner.eve.notifications.content;
+package com.regner.eve.notifications.crest;
 
 
 import android.content.Context;

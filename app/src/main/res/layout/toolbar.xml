@@ -8,11 +8,5 @@
     android:theme="@style/Toolbar"
     app:contentInsetStart="72dp">
 
-    <ProgressBar
-        android:id="@+id/toolbarProgress"
-        style="@style/Theme.IndeterminateProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|right" />
 </android.support.v7.widget.Toolbar>
 
