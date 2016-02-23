@@ -17,8 +17,8 @@ public class GCMListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         Log.d("onMessageReceived " + data.getString("message"));
         final Intent intent = new Intent(ACTION);
-        intent.getExtras().putString(FROM, from);
-        intent.getExtras().putString(MESSAGE, data.getString("message"));
+        intent.putExtra(FROM, from);
+        intent.putExtra(MESSAGE, data.getString("message"));
 
         final LocalBroadcastManager bm = LocalBroadcastManager.getInstance(this);
         bm.sendBroadcast(intent);

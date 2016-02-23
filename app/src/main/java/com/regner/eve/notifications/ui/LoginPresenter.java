@@ -33,7 +33,7 @@ public class LoginPresenter extends ViewPresenter<LoginView> {
         RX.subscribe(() -> {
             final CrestStatus status = this.crest.login(authData);
             if (null != status) {
-                this.feeds.register(Long.toString(status.getCharacterID()), authData.getQueryParameter("code"));
+                this.feeds.register(Long.toString(status.getCharacterID()), status.getToken());
             }
             return status;
         },

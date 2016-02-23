@@ -6,17 +6,7 @@ import java.util.Map;
 
 public class FeedSettings {
 
-    private String characterID;
     private Map<String, Boolean> settings = new HashMap<>();
-
-    public String getCharacterID() {
-        return characterID;
-    }
-
-    public FeedSettings setCharacterID(String characterID) {
-        this.characterID = characterID;
-        return this;
-    }
 
     public Map<String, Boolean> getSettings() {
         return Collections.unmodifiableMap(settings);

@@ -32,7 +32,9 @@ final class CrestFacadeImpl implements CrestFacade {
 
         final String authCode = authData.getQueryParameter("code");
         final CrestNetwork.CrestAuthenticator auth = this.crest.getAuthenticator();
-        return transform(auth.authenticate(authCode));
+
+        final CrestCharacterStatus status = auth.authenticate(authCode);
+        return transform(status, auth.getToken());
     }
 
     @Override
@@ -41,7 +43,7 @@ final class CrestFacadeImpl implements CrestFacade {
         auth.clear();
     }
 
-    private static CrestStatus transform(final CrestCharacterStatus status) {
+    private static CrestStatus transform(final CrestCharacterStatus status, final String accessToken) {
         if (null == status) {
             return null;
         }
@@ -49,6 +51,7 @@ final class CrestFacadeImpl implements CrestFacade {
         final CrestStatus returned = new CrestStatus();
         returned.setCharacterID(status.getCharacterID());
         returned.setCharacterName(status.getCharacterName());
+        returned.setToken(accessToken);
         return returned;
     }
 }
