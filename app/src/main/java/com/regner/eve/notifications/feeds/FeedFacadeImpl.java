@@ -7,7 +7,6 @@ import com.regner.eve.notifications.util.Log;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.IOException;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -16,9 +15,12 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 final class FeedFacadeImpl implements FeedFacade {
 
     private final FeedService service;
+    private final FeedPreferences preferences;
 
     public FeedFacadeImpl(final Context context) {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        this.preferences = new FeedPreferences(context);
+
+        final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         if (Log.D) {
             httpClient.addInterceptor(chain -> {
                     final okhttp3.Request rq = chain.request();
@@ -30,7 +32,6 @@ final class FeedFacadeImpl implements FeedFacade {
             });
         }
 
-        final FeedPreferences preferences = new FeedPreferences(context);
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(preferences.getURI())
                 .addConverterFactory(JacksonConverterFactory.create())
@@ -43,10 +44,12 @@ final class FeedFacadeImpl implements FeedFacade {
     @Override
     public FeedList getFeeds() {
         try {
-            final Map<String, Feed> feeds = service.getFeeds().execute().body();
-            final FeedList list = new FeedList();
-            list.setFeeds(feeds);
-            return list;
+            final FeedList feeds = new FeedList();
+            feeds.setFeeds(service.getFeeds().execute().body());
+            for (Feed f: feeds.getFeeds().values()) {
+                f.setEnabled(this.preferences.getFeedEnabled(f.getTopic()));
+            }
+            return feeds;
         }
         catch (IOException e) {
             Log.e(e.getLocalizedMessage(), e);
@@ -54,4 +57,8 @@ final class FeedFacadeImpl implements FeedFacade {
         }
     }
 
+    @Override
+    public void setFeed(final Feed feed) {
+        this.preferences.setFeedEnabled(feed.getTopic(), feed.getEnabled());
+    }
 }

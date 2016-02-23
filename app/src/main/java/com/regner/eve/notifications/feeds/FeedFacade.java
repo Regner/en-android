@@ -4,4 +4,5 @@ public interface FeedFacade {
 
     FeedList getFeeds();
 
+    void setFeed(final Feed feed);
 }
