@@ -20,13 +20,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 final class FeedFacadeImpl implements FeedFacade {
 
     private final FeedService service;
-    private final Context context;
-
-    private FeedToken token = null;
 
     public FeedFacadeImpl(final Context context) {
-        this.context = context;
-
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         if (Log.D) {
             httpClient.addInterceptor(chain -> {
@@ -59,98 +54,6 @@ final class FeedFacadeImpl implements FeedFacade {
         }
         catch (IOException e) {
             Log.e(e.getLocalizedMessage(), e);
-            return null;
-        }
-    }
-
-    @Override
-    public FeedSettings getSettings() {
-        if (null == this.token) {
-            return null;
-        }
-        try {
-            final Map<String, Boolean> settings =
-                this.service.getFeedSettings(
-                    "Bearer " + this.token.getAuthorization(),
-                    this.token.getCharacterID())
-                    .execute()
-                    .body();
-            return new FeedSettings().setSettings(settings);
-        }
-        catch (IOException e) {
-            Log.e(e.getLocalizedMessage(), e);
-            return null;
-        }
-    }
-
-    @Override
-    public void saveSettings(FeedSettings settings) {
-        if (null == this.token) {
-            return;
-        }
-        try {
-            this.service.saveFeedSettings(
-                    "Bearer " + this.token.getAuthorization(),
-                    this.token.getCharacterID(), settings.getSettings()).execute().body();
-        }
-        catch (IOException e) {
-            Log.e(e.getLocalizedMessage(), e);
-        }
-    }
-
-    @Override
-    public boolean register(final String charID, final String authToken) {
-        Log.e("Register " + ToStringBuilder.reflectionToString(this.token));
-
-        this.token = registerGCM(charID, authToken);
-        if (null == token) {
-            return false;
-        }
-        registerSettings();
-        return true;
-    }
-
-    private FeedSettings registerSettings() {
-        final FeedSettings existing = getSettings();
-        if ((null != existing) && !existing.getSettings().isEmpty()) {
-            return existing;
-        }
-
-        final FeedSettings settings = new FeedSettings();
-        final FeedList feeds = getFeeds();
-        for (Map.Entry<String, Feed> f: feeds.getFeeds().entrySet()) {
-            settings.setSettings(f.getKey(), false);
-        }
-
-        settings.setSettings("eve-news", true);
-        Log.e("SAVE SETTUBGS " + ToStringBuilder.reflectionToString(settings));
-        saveSettings(settings);
-        return getSettings();
-    }
-
-    private FeedToken registerGCM(final String charID, final String authToken) {
-        final FeedToken token = new FeedToken()
-                .setCharacterID(charID)
-                .setAuthorization(authToken);
-
-        final InstanceID instanceID = InstanceID.getInstance(this.context);
-        try {
-            final String gcmToken = instanceID.getToken(
-                    this.context.getString(R.string.gcm_defaultSenderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE,
-                    null);
-
-            Log.e("Gcm Token:" + gcmToken);
-
-            final Response<String> registered = this.service
-                    .saveFeedToken("Bearer " + authToken, charID, token.setToken(gcmToken))
-                    .execute();
-            Log.e(ToStringBuilder.reflectionToString(registered));
-            //return (registered.isSuccess()) ? token : null;
-            return token;
-        }
-        catch (IOException e) {
-            Log.e(e.getLocalizedMessage());
             return null;
         }
     }

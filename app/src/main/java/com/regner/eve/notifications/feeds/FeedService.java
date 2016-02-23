@@ -14,20 +14,4 @@ interface FeedService {
     @GET("/en-rss/external/")
     Call<Map<String, Feed>> getFeeds();
 
-    @GET("/en-rss/external/characters/{charID}/")
-    Call<Map<String, Boolean>> getFeedSettings(
-            @Header("Authorization") String authorization,
-            @Path("charID") final String charID);
-
-    @PUT("/en-rss/external/characters/{charID}/")
-    Call<String> saveFeedSettings(
-            @Header("Authorization") String authorization,
-            @Path("charID") final String charID,
-            @Body final Map<String, Boolean> settings);
-
-    @PUT("/en-gcm/external/characters/{charID}/")
-    Call<String> saveFeedToken(
-            @Header("Authorization") String authorization,
-            @Path("charID") final String charID,
-            @Body final FeedToken feedToken);
 }

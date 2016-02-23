@@ -9,12 +9,9 @@ import android.widget.TextView;
 import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.feeds.Feed;
 import com.regner.eve.notifications.feeds.FeedList;
-import com.regner.eve.notifications.feeds.FeedSettings;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,29 +31,18 @@ final class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHol
             ButterKnife.bind(this, itemView);
         }
 
-        public void render(final Feed feed, final boolean enabled) {
+        public void render(final Feed feed) {
             this.feedName.setText(feed.getName());
             this.feedURL.setText(feed.getUrl());
         }
     }
 
     private final List<Feed> feeds = new LinkedList<>();
-    private final Map<String, Boolean> settings = new HashMap<>();
 
     public void setFeeds(final FeedList feeds) {
         this.feeds.clear();
-        this.settings.clear();
-
         if (null != feeds) {
             this.feeds.addAll(feeds.getFeeds().values());
-        }
-        notifyDataSetChanged();
-    }
-
-    public void setSettings(final FeedSettings settings) {
-        this.settings.clear();
-        if (null != settings) {
-            this.settings.putAll(settings.getSettings());
         }
         notifyDataSetChanged();
     }
@@ -70,9 +56,8 @@ final class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHol
     @Override
     public void onBindViewHolder(FeedHolder holder, int position) {
         final Feed feed = this.feeds.get(position);
-        final Boolean enabled = this.settings.get(feed.getName());
         holder.itemView.setOnClickListener(v -> onFeedSelected(feed));
-        holder.render(feed, (null == enabled) ? false : enabled.booleanValue());
+        holder.render(feed);
     }
 
     @Override

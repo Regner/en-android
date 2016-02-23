@@ -18,7 +18,4 @@ public class FeedListPresenter extends ViewPresenter<FeedListView> {
         RX.subscribe(feeds::getFeeds, feeds -> getView().showList(feeds));
     }
 
-    public void loadSettings() {
-        RX.subscribe(feeds::getSettings, settings -> getView().showSettings(settings));
-    }
 }

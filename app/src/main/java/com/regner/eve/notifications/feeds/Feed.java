@@ -1,11 +1,16 @@
 package com.regner.eve.notifications.feeds;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Feed {
 
     private String url;
     private String name;
 
     private boolean official;
+
+    @JsonIgnore
+    private boolean enabled;
 
     public String getUrl() {
         return url;
@@ -32,5 +37,13 @@ public class Feed {
     public Feed setOfficial(boolean official) {
         this.official = official;
         return this;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

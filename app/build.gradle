@@ -64,9 +64,11 @@ android {
 }
 
 dependencies {
-    //https://bitbucket.org/evanova/eve-crest
-    compile project(':crest')
     compile 'org.slf4j:slf4j-android:1.7.12'
+
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-collections:commons-collections:3.2.1'
 
     compile 'io.reactivex:rxandroid:1.0.1'
 

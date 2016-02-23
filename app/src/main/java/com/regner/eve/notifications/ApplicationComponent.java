@@ -1,6 +1,5 @@
 package com.regner.eve.notifications;
 
-import com.regner.eve.notifications.crest.CrestModule;
 import com.regner.eve.notifications.feeds.FeedModule;
 import com.regner.eve.notifications.gcm.MessageModule;
 import com.regner.eve.notifications.ui.FeedDisplayFragment;
@@ -13,13 +12,10 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {
-        CrestModule.class,
         MessageModule.class,
         FeedModule.class,
         ApplicationModule.class})
 public interface ApplicationComponent {
-
-    void inject(final MainActivity activity);
 
     void inject(final FeedListFragment fragment);
 
