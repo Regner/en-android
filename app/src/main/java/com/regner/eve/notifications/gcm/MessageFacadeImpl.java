@@ -8,7 +8,12 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.gcm.GcmPubSub;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.util.Log;
+import com.regner.eve.notifications.util.RX;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -31,6 +36,7 @@ final class MessageFacadeImpl implements MessageFacade {
 
     private final Context context;
     private final Subject<Message, Message> subject;
+    private String token;
 
     public MessageFacadeImpl(Context context) {
         this.context = context.getApplicationContext();
@@ -48,11 +54,69 @@ final class MessageFacadeImpl implements MessageFacade {
     }
 
     @Override
-    public Subscription subscribe(final Action onNext) {
+    public Subscription subscribe(final String topic, final Action onNext) {
+        RX.subscribe(() -> registerTopic(topic));
         return subject
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(onNext::onMessage);
+    }
+
+    @Override
+    public void unsubscribe(String topic) {
+        RX.subscribe(() -> unregisterTopic(topic));
+    }
+
+    private Void registerTopic(final String topic) {
+        if (null == this.token) {
+            this.token = registerGCM();
+        }
+
+        Log.e("registerTopic: topic=" + topic + "; token=" + this.token);
+        if (null == this.token) {
+            return null;
+        }
+        try {
+            GcmPubSub pubSub = GcmPubSub.getInstance(this.context);
+            pubSub.subscribe(token, "/topics/" + topic, null);
+        }
+        catch (IOException e) {
+            Log.e(e.getLocalizedMessage(), e);
+        }
+        return null;
+    }
+
+    private Void unregisterTopic(final String topic) {
+        Log.e("unregisterTopic: topic=" + topic + "; token=" + this.token);
+        if (null == this.token) {
+            return null;
+        }
+        try {
+            GcmPubSub pubSub = GcmPubSub.getInstance(this.context);
+            pubSub.unsubscribe(token, "/topics/" + topic);
+        }
+        catch (IOException e) {
+            Log.e(e.getLocalizedMessage(), e);
+        }
+        return null;
+    }
+
+    private String registerGCM() {
+        Log.e("registerGCM");
+        final InstanceID instanceID = InstanceID.getInstance(this.context);
+        try {
+            final String gcmToken = instanceID.getToken(
+                    this.context.getString(R.string.gcm_defaultSenderId),
+                    GoogleCloudMessaging.INSTANCE_ID_SCOPE,
+                    null);
+
+            Log.e("Gcm Token:" + gcmToken);
+            return gcmToken;
+        }
+        catch (IOException e) {
+            Log.e(e.getLocalizedMessage(), e);
+            return null;
+        }
     }
 
     private static Message from(final Intent intent) {

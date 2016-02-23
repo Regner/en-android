@@ -9,7 +9,12 @@ import android.view.ViewGroup;
 
 import com.regner.eve.notifications.ApplicationComponent;
 import com.regner.eve.notifications.R;
+import com.regner.eve.notifications.feeds.Feed;
 import com.regner.eve.notifications.feeds.FeedList;
+import com.regner.eve.notifications.gcm.Message;
+import com.regner.eve.notifications.util.Log;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.inject.Inject;
 
@@ -18,7 +23,13 @@ public class FeedListFragment extends AbstractFragment implements FeedListView {
     @Inject
     FeedListPresenter presenter;
 
-    private FeedListAdapter adapter = new FeedListAdapter();
+    private FeedListAdapter adapter = new FeedListAdapter() {
+        @Override
+        protected void onFeedSelected(Feed feed, int position) {
+            presenter.setEnabled(feed, !feed.getEnabled());
+            adapter.notifyItemChanged(position);
+        }
+    };
 
     @Override
     protected void inject(ApplicationComponent component) {
@@ -56,4 +67,9 @@ public class FeedListFragment extends AbstractFragment implements FeedListView {
         this.adapter.setFeeds(feeds);
     }
 
+    @Override
+    public void showMessage(Message message) {
+       // this.adapter.animateFeed(message.getFrom());
+        Log.i(ToStringBuilder.reflectionToString(message));
+    }
 }

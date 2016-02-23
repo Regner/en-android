@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Feed {
 
+    @JsonIgnore
+    private String topic;
+
     private String url;
     private String name;
 
@@ -11,6 +14,14 @@ public class Feed {
 
     @JsonIgnore
     private boolean enabled;
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
     public String getUrl() {
         return url;

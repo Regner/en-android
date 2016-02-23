@@ -1,5 +1,6 @@
 package com.regner.eve.notifications.ui;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-final class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHolder> {
+class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHolder> {
 
     static class FeedHolder extends RecyclerView.ViewHolder {
 
@@ -33,6 +34,7 @@ final class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHol
 
         public void render(final Feed feed) {
             this.feedName.setText(feed.getName());
+            this.feedName.setTextColor(feed.getEnabled() ? Color.GREEN : Color.DKGRAY);
             this.feedURL.setText(feed.getUrl());
         }
     }
@@ -56,7 +58,7 @@ final class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHol
     @Override
     public void onBindViewHolder(FeedHolder holder, int position) {
         final Feed feed = this.feeds.get(position);
-        holder.itemView.setOnClickListener(v -> onFeedSelected(feed));
+        holder.itemView.setOnClickListener(v -> onFeedSelected(feed, position));
         holder.render(feed);
     }
 
@@ -65,5 +67,5 @@ final class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHol
         return this.feeds.size();
     }
 
-    protected void onFeedSelected(final Feed feed) {}
+    protected void onFeedSelected(final Feed feed, final int position) {}
 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import com.regner.eve.notifications.ApplicationComponent;
 import com.regner.eve.notifications.R;
 
-import butterknife.ButterKnife;
-
 public class MainActivity extends AbstractActivity<FeedListFragment> {
 
     @Override

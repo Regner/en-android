@@ -2,9 +2,6 @@ package com.regner.eve.notifications.feeds;
 
 import android.content.Context;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.util.Log;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -13,7 +10,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 

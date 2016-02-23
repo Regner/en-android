@@ -17,6 +17,9 @@ public class FeedList {
         if (null != feeds) {
             this.feeds.putAll(feeds);
         }
+        for (Map.Entry<String, Feed> e: this.feeds.entrySet()) {
+            e.getValue().setTopic(e.getKey());
+        }
         return this;
     }
 }

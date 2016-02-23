@@ -9,6 +9,7 @@ import rx.Subscription;
 public class MessagePresenter extends ViewPresenter<MessageView> {
 
     private final MessageFacade messages;
+
     private Subscription subscription;
 
     @Inject
@@ -18,15 +19,22 @@ public class MessagePresenter extends ViewPresenter<MessageView> {
     }
 
     @Override
-    public void attachView(MessageView view) {
-        super.attachView(view);
-        this.subscription = messages.subscribe(m -> getView().onMessage(m));
+    public void detachView(boolean retainInstance) {
+        unsubscribe();
+        super.detachView(retainInstance);
     }
 
-    @Override
-    public void detachView(boolean retainInstance) {
-        this.subscription.unsubscribe();
+    public void subscribe(final String topic) {
+        if (null != this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        this.subscription = messages.subscribe(topic, m -> getView().onMessage(m));
+    }
+
+    public void unsubscribe() {
+        if (null != this.subscription) {
+            this.subscription.unsubscribe();
+        }
         this.subscription = null;
-        super.detachView(retainInstance);
     }
 }

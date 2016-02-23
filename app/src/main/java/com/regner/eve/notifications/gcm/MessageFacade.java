@@ -8,5 +8,7 @@ public interface MessageFacade {
         void onMessage(final Message message);
     }
 
-    Subscription subscribe(final Action onNext);
+    Subscription subscribe(final String topic, final Action onNext);
+
+    void unsubscribe(final String topic);
 }
