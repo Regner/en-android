@@ -69,8 +69,8 @@ public class FeedListFragment extends AbstractFragment implements FeedListView {
     }
 
     @Override
-    public void showMessage(Message message) {
-       // this.adapter.animateFeed(message.getFrom());
-        Log.i(ToStringBuilder.reflectionToString(message));
+    public void showMessage(final Feed from, final Message message) {
+       this.adapter.setMessage(from, message);
+
     }
 }

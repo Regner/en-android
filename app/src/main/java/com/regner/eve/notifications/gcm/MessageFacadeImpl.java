@@ -46,6 +46,7 @@ final class MessageFacadeImpl implements MessageFacade {
         bm.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.e(ToStringBuilder.reflectionToString(intent));
                 subject.onNext(from(intent));
             }
         }, filter);

@@ -9,6 +9,6 @@ public interface FeedListView {
 
     void showList(final List<Feed> feeds);
 
-    void showMessage(final Message message);
+    void showMessage(final Feed from, final Message message);
 
 }

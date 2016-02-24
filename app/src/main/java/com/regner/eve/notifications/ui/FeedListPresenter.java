@@ -22,7 +22,7 @@ public class FeedListPresenter extends ViewPresenter<FeedListView> {
         RX.subscribe(feeds::getFeeds, feeds -> {
             for (Feed f: feeds) {
                 if (f.getEnabled()) {
-                    this.messages.subscribe(f.getTopic(), message -> getView().showMessage(message));
+                    this.messages.subscribe(f.getTopic(), message -> getView().showMessage(f, message));
                 }
             }
             getView().showList(feeds);
@@ -31,7 +31,7 @@ public class FeedListPresenter extends ViewPresenter<FeedListView> {
 
     public void setEnabled(final Feed feed, final boolean enabled) {
         if (enabled) {
-            this.messages.subscribe(feed.getTopic(), message -> getView().showMessage(message));
+            this.messages.subscribe(feed.getTopic(), message -> getView().showMessage(feed, message));
             feed.setEnabled(true);
         }
         else {

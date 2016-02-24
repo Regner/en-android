@@ -7,6 +7,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.regner.eve.notifications.util.Log;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class GCMListenerService extends GcmListenerService {
 
     public static final String ACTION = GCMListenerService.class.getName() + ".action";
@@ -15,10 +18,15 @@ public class GCMListenerService extends GcmListenerService {
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        Log.d("onMessageReceived " + data.getString("message"));
+        final String message = data.getString("notification");
+        if (StringUtils.isBlank(message)) {
+            Log.e("Invalid message received: " + ToStringBuilder.reflectionToString(data));
+            return;
+        }
+
         final Intent intent = new Intent(ACTION);
         intent.putExtra(FROM, from);
-        intent.putExtra(MESSAGE, data.getString("message"));
+        intent.putExtra(MESSAGE, message);
 
         final LocalBroadcastManager bm = LocalBroadcastManager.getInstance(this);
         bm.sendBroadcast(intent);
