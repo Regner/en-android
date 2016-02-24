@@ -1,8 +1,10 @@
 package com.regner.eve.notifications.feeds;
 
+import java.util.List;
+
 public interface FeedFacade {
 
-    FeedList getFeeds();
+    List<Feed> getFeeds();
 
     void setFeed(final Feed feed);
 }

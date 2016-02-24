@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.feeds.Feed;
-import com.regner.eve.notifications.feeds.FeedList;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -41,10 +40,10 @@ class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedHolder> {
 
     private final List<Feed> feeds = new LinkedList<>();
 
-    public void setFeeds(final FeedList feeds) {
+    public void setFeeds(final List<Feed> feeds) {
         this.feeds.clear();
         if (null != feeds) {
-            this.feeds.addAll(feeds.getFeeds().values());
+            this.feeds.addAll(feeds);
         }
         notifyDataSetChanged();
     }

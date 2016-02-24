@@ -3,10 +3,7 @@ package com.regner.eve.notifications.ui;
 import com.regner.eve.notifications.feeds.Feed;
 import com.regner.eve.notifications.feeds.FeedFacade;
 import com.regner.eve.notifications.gcm.MessageFacade;
-import com.regner.eve.notifications.util.Log;
 import com.regner.eve.notifications.util.RX;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.inject.Inject;
 
@@ -23,8 +20,7 @@ public class FeedListPresenter extends ViewPresenter<FeedListView> {
 
     public void loadFeeds() {
         RX.subscribe(feeds::getFeeds, feeds -> {
-            for (Feed f: feeds.getFeeds().values()) {
-                Log.e("ENABED " + ToStringBuilder.reflectionToString(f));
+            for (Feed f: feeds) {
                 if (f.getEnabled()) {
                     this.messages.subscribe(f.getTopic(), message -> getView().showMessage(message));
                 }

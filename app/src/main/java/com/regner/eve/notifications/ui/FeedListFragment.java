@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import com.regner.eve.notifications.ApplicationComponent;
 import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.feeds.Feed;
-import com.regner.eve.notifications.feeds.FeedList;
 import com.regner.eve.notifications.gcm.Message;
 import com.regner.eve.notifications.util.Log;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -63,7 +64,7 @@ public class FeedListFragment extends AbstractFragment implements FeedListView {
     }
 
     @Override
-    public void showList(FeedList feeds) {
+    public void showList(List<Feed> feeds) {
         this.adapter.setFeeds(feeds);
     }
 

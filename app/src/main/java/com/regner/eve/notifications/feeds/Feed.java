@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Feed {
 
-    @JsonIgnore
     private String topic;
 
     private String url;
@@ -14,6 +13,12 @@ public class Feed {
 
     @JsonIgnore
     private boolean enabled;
+
+    @JsonIgnore
+    private String categoryID;
+
+    @JsonIgnore
+    private String categoryName;
 
     public String getTopic() {
         return topic;
@@ -56,5 +61,21 @@ public class Feed {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

@@ -7,6 +7,9 @@ import com.regner.eve.notifications.util.Log;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -42,14 +45,20 @@ final class FeedFacadeImpl implements FeedFacade {
     }
 
     @Override
-    public FeedList getFeeds() {
+    public List<Feed> getFeeds() {
         try {
-            final FeedList feeds = new FeedList();
-            feeds.setFeeds(service.getFeeds().execute().body());
-            for (Feed f: feeds.getFeeds().values()) {
-                f.setEnabled(this.preferences.getFeedEnabled(f.getTopic()));
+            final Map<String, FeedService.FeedCategory> feeds = service.getFeeds().execute().body();
+            final List<Feed> returned = new LinkedList<>();
+            for (Map.Entry<String, FeedService.FeedCategory> e: feeds.entrySet()) {
+                for (Feed f: e.getValue().getTopics()) {
+                    f.setCategoryID(e.getKey());
+                    f.setCategoryName(e.getValue().getName());
+                    f.setEnabled(this.preferences.getFeedEnabled(f.getTopic()));
+
+                    returned.add(f);
+                }
             }
-            return feeds;
+            return returned;
         }
         catch (IOException e) {
             Log.e(e.getLocalizedMessage(), e);
