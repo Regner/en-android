@@ -8,6 +8,7 @@ public class Feed {
 
     private String url;
     private String name;
+    private String feed;
 
     private boolean official;
 
@@ -52,6 +53,15 @@ public class Feed {
 
     public Feed setOfficial(boolean official) {
         this.official = official;
+        return this;
+    }
+
+    public String getFeed() {
+        return feed;
+    }
+
+    public Feed setFeed(String feed) {
+        this.feed = feed;
         return this;
     }
 
