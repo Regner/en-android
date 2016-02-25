@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.regner.eve.notifications.PerActivity;
 import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.feeds.Feed;
 import com.regner.eve.notifications.gcm.Message;

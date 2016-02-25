@@ -1,6 +1,7 @@
 package com.regner.eve.notifications.ui;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.regner.eve.notifications.ApplicationComponent;
 import com.regner.eve.notifications.R;
@@ -21,10 +22,18 @@ public class MainActivity extends AbstractActivity<FeedListFragment> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
-
-        setTitle(R.string.title_logged_out);
-        setDescription(R.string.title_logged_out_description);
-
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        setTitle(R.string.app_name);
+        setDescription(R.string.app_description);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
 }

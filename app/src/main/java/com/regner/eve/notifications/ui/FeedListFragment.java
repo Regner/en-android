@@ -11,9 +11,6 @@ import com.regner.eve.notifications.ApplicationComponent;
 import com.regner.eve.notifications.R;
 import com.regner.eve.notifications.feeds.Feed;
 import com.regner.eve.notifications.gcm.Message;
-import com.regner.eve.notifications.util.Log;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.List;
 

@@ -11,15 +11,13 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
-    <uses-permission
-        android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <permission
         android:name="com.regner.eve.notifications.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission
-        android:name="com.regner.eve.notifications.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.regner.eve.notifications.permission.C2D_MESSAGE" />
 
     <application
         android:name=".Application"
@@ -36,16 +34,23 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="com.regner.eve.notifications.rss" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".gcm.NotificationService">
+            <intent-filter>
+                <action android:name="com.regner.eve.notifications.gcm.GCMListenerService.action" />
             </intent-filter>
         </receiver>
         <service
             android:name=".gcm.GCMListenerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
@@ -57,6 +62,7 @@
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTop">

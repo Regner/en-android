@@ -7,6 +7,21 @@ public class Message {
     private String subtitle;
     private String url;
 
+    private int id = 86646;
+    private final long time = System.currentTimeMillis();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
     public String getFrom() {
         return from;
     }
