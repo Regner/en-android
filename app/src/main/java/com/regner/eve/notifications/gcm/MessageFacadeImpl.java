@@ -125,16 +125,16 @@ final class MessageFacadeImpl implements MessageFacade {
         }
     }
 
-    private void sendNotification(String title, String subTitle, String url) {
+    private void sendNotification(Message message) {
         Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
-        notificationIntent.setData(Uri.parse(url));
+        notificationIntent.setData(Uri.parse(message.getUrl()));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context.getApplicationContext())
                         .setSmallIcon(R.drawable.ic_account)
-                        .setContentTitle(title)
-                        .setContentText(subTitle)
+                        .setContentTitle(message.getTitle())
+                        .setContentText(message.getSubtitle())
                         .setContentIntent(pendingIntent);
 
         // Need to add the message ID here
@@ -162,7 +162,7 @@ final class MessageFacadeImpl implements MessageFacade {
             Message message = MAPPER.readValue(StringUtils.removeStart(text, "notification ="), Message.class);
             message.setFrom(intent.getStringExtra(GCMListenerService.FROM));
 
-            this.sendNotification(message.getTitle(), message.getSubtitle(), message.getUrl());
+            this.sendNotification(message);
 
             Log.e("Message: " + ToStringBuilder.reflectionToString(message));
             return message;
