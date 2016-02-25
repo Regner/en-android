@@ -149,7 +149,7 @@ final class MessageFacadeImpl implements MessageFacade {
             // Need to add the message ID here
             int notificationId = 001;
 
-            NotificationManager mNotifyMgr =
+            NotificationManager notifyMgr =
                     (NotificationManager) context.getApplicationContext()
                     .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -158,7 +158,7 @@ final class MessageFacadeImpl implements MessageFacade {
             notification.defaults |= Notification.DEFAULT_SOUND;
             notification.defaults |= Notification.DEFAULT_VIBRATE;
 
-            mNotifyMgr.notify(notificationId, notification);
+            notifyMgr.notify(notificationId, notification);
 
             Log.e("Message: " + ToStringBuilder.reflectionToString(message));
             return message;
