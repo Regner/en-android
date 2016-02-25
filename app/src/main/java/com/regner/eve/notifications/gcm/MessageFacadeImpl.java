@@ -52,7 +52,12 @@ final class MessageFacadeImpl implements MessageFacade {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.e(ToStringBuilder.reflectionToString(intent));
-                subject.onNext(from(intent));
+                final Message message = from(intent);
+                if (null == message) {
+                    return;
+                }
+                sendNotification(context, message);
+                subject.onNext(message);
             }
         }, filter);
 
@@ -125,8 +130,8 @@ final class MessageFacadeImpl implements MessageFacade {
         }
     }
 
-    private void sendNotification(Message message) {
-        Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
+    private static void sendNotification(final Context context, final Message message) {
+        final Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
         notificationIntent.setData(Uri.parse(message.getUrl()));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
@@ -140,7 +145,7 @@ final class MessageFacadeImpl implements MessageFacade {
         // Need to add the message ID here
         int notificationId = 001;
 
-        NotificationManager notifyMgr =
+        final NotificationManager notifyMgr =
                 (NotificationManager) context.getApplicationContext()
                         .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -152,7 +157,7 @@ final class MessageFacadeImpl implements MessageFacade {
         notifyMgr.notify(notificationId, notification);
     }
 
-    private Message from(final Intent intent) {
+    private static Message from(final Intent intent) {
         String text = intent.getStringExtra(GCMListenerService.MESSAGE);
         if (StringUtils.isBlank(text)) {
             Log.w("No text in GCM message");
@@ -161,8 +166,6 @@ final class MessageFacadeImpl implements MessageFacade {
         try {
             Message message = MAPPER.readValue(StringUtils.removeStart(text, "notification ="), Message.class);
             message.setFrom(intent.getStringExtra(GCMListenerService.FROM));
-
-            this.sendNotification(message);
 
             Log.e("Message: " + ToStringBuilder.reflectionToString(message));
             return message;
