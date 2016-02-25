@@ -125,6 +125,33 @@ final class MessageFacadeImpl implements MessageFacade {
         }
     }
 
+    private void sendNotification(String title, String subTitle, String url) {
+        Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
+        notificationIntent.setData(Uri.parse(url));
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context.getApplicationContext())
+                        .setSmallIcon(R.drawable.ic_account)
+                        .setContentTitle(title)
+                        .setContentText(subTitle)
+                        .setContentIntent(pendingIntent);
+
+        // Need to add the message ID here
+        int notificationId = 001;
+
+        NotificationManager notifyMgr =
+                (NotificationManager) context.getApplicationContext()
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Notification notification = builder.build();
+
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+        notifyMgr.notify(notificationId, notification);
+    }
+
     private Message from(final Intent intent) {
         String text = intent.getStringExtra(GCMListenerService.MESSAGE);
         if (StringUtils.isBlank(text)) {
@@ -135,30 +162,7 @@ final class MessageFacadeImpl implements MessageFacade {
             Message message = MAPPER.readValue(StringUtils.removeStart(text, "notification ="), Message.class);
             message.setFrom(intent.getStringExtra(GCMListenerService.FROM));
 
-            Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
-            notificationIntent.setData(Uri.parse(message.getUrl()));
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-
-            NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(context.getApplicationContext())
-                    .setSmallIcon(R.drawable.ic_account)
-                    .setContentTitle(message.getTitle())
-                    .setContentText(message.getSubtitle())
-                    .setContentIntent(pendingIntent);
-
-            // Need to add the message ID here
-            int notificationId = 001;
-
-            NotificationManager notifyMgr =
-                    (NotificationManager) context.getApplicationContext()
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-
-            Notification notification = builder.build();
-
-            notification.defaults |= Notification.DEFAULT_SOUND;
-            notification.defaults |= Notification.DEFAULT_VIBRATE;
-
-            notifyMgr.notify(notificationId, notification);
+            this.sendNotification(message.getTitle(), message.getSubtitle(), message.getUrl());
 
             Log.e("Message: " + ToStringBuilder.reflectionToString(message));
             return message;
