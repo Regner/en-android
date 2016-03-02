@@ -14,18 +14,28 @@ public class NotificationService extends MessageReceiver {
 
     @Override
     public void onReceive(Context context, Message message) {
-        final Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
-        notificationIntent.setData(Uri.parse(message.getUrl()));
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context.getApplicationContext())
                         .setSmallIcon(R.mipmap.ic_launcher)//FIXME change this icon
                         .setContentTitle(message.getTitle())
                         .setContentText(message.getSubtitle())
                         .setShowWhen(true)
-                        .setWhen(message.getTime())
-                        .setContentIntent(pendingIntent);
+                        .setWhen(message.getTime());
+
+        if (message.getUrl() != null) {
+            final Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
+            notificationIntent.setData(Uri.parse(message.getUrl()));
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+
+            builder.setContentIntent(pendingIntent);
+        }
+
+        if (message.getExtraText() != null) {
+            builder.setStyle(new NotificationCompat.BigTextStyle()
+                    .setBigContentTitle(message.getTitle())
+                    .setSummaryText(message.getSubtitle())
+                    .bigText(message.getExtraText()));
+        }
 
         final NotificationManager notifyMgr =
                 (NotificationManager) context.getApplicationContext()

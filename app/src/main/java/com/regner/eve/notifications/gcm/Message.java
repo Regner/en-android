@@ -6,6 +6,7 @@ public class Message {
     private String title;
     private String subtitle;
     private String url;
+    private String extra_text;
 
     private int id = 86646;
     private final long time = System.currentTimeMillis();
@@ -32,6 +33,15 @@ public class Message {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setExtraText(String extraText) {
+        this.extra_text = extraText;
+    }
+
+    public String getExtraText() {
+        return extra_text;
+//        return "this is a test of some extyra long text!!!!!!!!!!!!!!!!ak sjhdbkajsh flkjsdhg lksdfhgk";
     }
 
     public void setTitle(String title) {

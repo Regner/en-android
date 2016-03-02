@@ -39,6 +39,7 @@ public abstract class MessageReceiver extends BroadcastReceiver {
             return null;
         }
         try {
+            Log.w(text);
             Message message = MAPPER.readValue(StringUtils.removeStart(text, "notification ="), Message.class);
             message.setFrom(intent.getStringExtra(GCMListenerService.FROM));
             return message;
